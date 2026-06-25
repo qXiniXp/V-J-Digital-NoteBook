@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Measurement System</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <header>
+        <h1>V&J Digitalna Sveska</h1>
+    </header>
+
+    <div id="appContainer">
+        <aside class="sidebar">
+            <button id="navMeasurements" class="nav-btn active">Mjerenja</button>
+            <button id="navDashboard" class="nav-btn">Dashboard</button>
+        </aside>
+
+        <main id="mainContent">
+            <!-- Measurements view -->
+            <section id="measurementsView">
+                <div class="action-bar">
+                    <button id="newMeasurementBtn" class="primary">Novo Mjerenje</button>
+                    <div class="filter-tabs">
+                        <button class="filter-btn active" data-filter="Sve">Sve</button>
+                        <button class="filter-btn" data-filter="Mjereno">Mjereno</button>
+                        <button class="filter-btn" data-filter="Napravljeno">Napravljeno</button>
+                        <button class="filter-btn" data-filter="Montirano">Montirano</button>
+                        <button class="filter-btn" data-filter="Placeno">Placeno</button>
+                    </div>
+                </div>
+                <div id="measurementsContainer"></div>
+            </section>
+
+            <!-- Dashboard view (hidden by default) -->
+            <section id="dashboardView" style="display:none;">
+                <div class="dashboard">
+                    <h2>Dashboard</h2>
+                    <div class="time-filter">
+                        <label>Period:
+                            <select id="timeFilter">
+                                <option value="All">Oduvjek</option>
+                                <option value="Month">Ovaj mjesec</option>
+                                <option value="Year">Ove godine</option>
+                            </select>
+                        </label>
+                    </div>
+                    <div id="overviewStats" class="stats-section"></div>
+                    <div id="productBreakdown" class="stats-section"></div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <!-- Modal (hidden by default) -->
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <span class="close">&times;</span>
+            <form id="modalForm">
+                <label for="customerName">Ime Klijenta:</label>
+                <input type="text" id="customerName" name="customerName" required><br><br>
+
+                <label for="phoneNumber">Broj Telefona:</label>
+                <input type="tel" id="phoneNumber" name="phoneNumber" required><br><br>
+
+                <label for="projectName">Ime Mjerenja:</label>
+                <input type="text" id="projectName" name="projectName" required><br><br>
+
+                <button type="button" id="startBtn">Počni</button>
+                <button type="button" id="cancelBtn">Poništi</button>
+            </form>
+        </div>
+    </div>
+
+    <script src="app.js"></script>
+</body>
+</html>

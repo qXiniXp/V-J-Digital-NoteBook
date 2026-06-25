@@ -1,0 +1,256 @@
+/* measurement-system/style.css – refined layout */
+
+/* 1. General layout */
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background-color: #f5f6f8;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+#appContainer {
+    width: 90%;
+    margin: auto;
+    padding: 1rem;
+    padding-top: 0;
+    box-sizing: border-box;
+    overflow: hidden;
+}
+
+/* 2. Header – improved */
+header {
+    position: sticky;
+    top: 0;
+    background-color: #417ac5;
+    padding: 1rem 0;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+    z-index: 10;
+    text-align: center;
+}
+header h1 {
+    margin: 0;
+    font-weight: 600;
+    font-size: 1.75rem;
+    color: #ffffff;
+}
+
+/* 3. Buttons – consistent style */
+button {
+    border: none;
+    border-radius: 9px;
+    padding: 0.75rem 1.25rem;
+    font-size: 1rem;
+    cursor: pointer;
+    color: #fff;
+    background-color: #3369cc;
+}
+button:hover {
+    opacity: 0.9;
+}
+button.primary {
+    background-color: #2563eb;
+}
+button.danger {
+    background-color: #ef4444;
+}
+button.neutral {
+    background-color: #6b7280;
+    color: #fff;
+}
+
+#newMeasurementBtn{
+    margin: 20px 0 20px 0px;
+}
+
+.delete-measurement {
+    margin-top: 20px;
+    }
+
+/* Action Bar */
+.action-bar {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+}
+
+@media (max-width: 657px) {
+    .action-bar{
+        flex-direction: column;
+        justify-content: center;
+    }
+}
+
+/* Filter Tabs */
+.filter-tabs {
+    display: flex;
+    gap: 0.5rem;
+    background: #e5e7eb;
+    padding: 0.25rem;
+    border-radius: 10px;
+}
+.filter-btn {
+    background: transparent;
+    color: #4b5563;
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 0.9rem;
+    border: none;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+.filter-btn.active {
+    background: #fff;
+    color: #2563eb;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    font-weight: 600;
+}
+
+/* Full‑width on mobile */
+@media (max-width: 600px) {
+    button {
+        width: 100%;
+        margin-bottom: 0.5rem;
+    }
+    #newMeasurementBtn {
+        width: 90%;
+        margin: 20px auto;
+    }
+    .delete-measurement {
+        width: 100%;
+        margin-bottom: 0;
+    }
+}
+
+/* 4. Modal – centered overlay */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.4);
+    align-items: center;
+    justify-content: center;
+    z-index: 100;
+}
+.modal.show {
+    display: flex;
+}
+.modal-content {
+    background-color: #fff;
+    border-radius: 8px;
+    padding: 1.5rem;
+    width: 90%;
+    max-width: 400px;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+    position: relative;
+}
+.modal-content .close {
+    position: absolute;
+    top: 0.5rem;
+    right: 0.5rem;
+    font-size: 1.2rem;
+    cursor: pointer;
+    color: #666;
+}
+
+/* 5. Inputs – clean modern */
+input[type="text"],
+input[type="tel"],
+select {
+    width: 100%;
+    padding: 0.5rem;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    font-size: 1rem;
+    box-sizing: border-box;
+}
+input:focus,
+select:focus {
+    outline: 2px solid #2563eb;
+    border-color: #2563eb;
+}
+
+/* Spacing between form fields */
+#modalForm label {
+    display: block;
+    margin-top: 0.75rem;
+    font-weight: 500;
+}
+
+/* 6. Measurement cards */
+.measurement-card {
+    background-color: #fff;
+    border-radius: 8px;
+    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
+    padding: 1rem;
+    margin-bottom: 1rem;
+}
+.measurement-card strong {
+    font-size: 1.2rem;
+    display: block;
+    margin-bottom: 0.25rem;
+}
+
+/* 7. Product list – simple rows */
+#productsTable {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 1rem;
+}
+#productsTable th,
+#productsTable td {
+    padding: 0.5rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+}
+#productsTable th {
+    background-color: #f9fafb;
+    font-weight: 600;
+}
+.delete-product {
+    background-color: #ef4444;
+    color: #fff;
+    padding: 0.3rem 0.6rem;
+    font-size: 0.9rem;
+    border-radius: 4px;
+}
+
+/* 8. Totals section */
+#totalArea,
+#totalPrice {
+    font-weight: bold;
+    font-size: 1.1rem;
+}
+.totals-box {
+    background-color: #f3f4f6;
+    padding: 0.75rem;
+    border-radius: 6px;
+    margin-top: 1rem;
+}
+
+/* 9. Responsive tweaks */
+@media (max-width: 600px) {
+    header h1 {
+        font-size: 1.5rem;
+    }
+    .measurement-card {
+        padding: 0.75rem;
+    }
+    .modal-content {
+        padding: 1rem;
+    }
+    main{
+        display: flex;
+        flex-direction: column;
+        justify-content: center;
+        align-items: center;
+    }
+    #measurementsContainer{
+        width: 90%;
+        margin: auto;
+    }
+}
