@@ -1,256 +1,448 @@
-/* measurement-system/style.css – refined layout */
+/* ============================================
+   V&J Digitalna Sveska – Mobile-first CSS
+   ============================================ */
 
-/* 1. General layout */
-body {
-    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
-    background-color: #f5f6f8;
+/* 1. Reset & base */
+*, *::before, *::after {
+    box-sizing: border-box;
     margin: 0;
     padding: 0;
-    display: flex;
-    justify-content: center;
-    flex-direction: column;
-}
-#appContainer {
-    width: 90%;
-    margin: auto;
-    padding: 1rem;
-    padding-top: 0;
-    box-sizing: border-box;
-    overflow: hidden;
 }
 
-/* 2. Header – improved */
+body {
+    font-family: system-ui, -apple-system, "Segoe UI", Roboto, sans-serif;
+    background-color: #f0f2f5;
+    color: #1f2937;
+    min-height: 100vh;
+}
+
+/* 2. Header */
 header {
     position: sticky;
     top: 0;
-    background-color: #417ac5;
-    padding: 1rem 0;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
-    z-index: 10;
+    background-color: #2563eb;
+    padding: 0.9rem 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    z-index: 100;
     text-align: center;
 }
 header h1 {
-    margin: 0;
-    font-weight: 600;
-    font-size: 1.75rem;
-    color: #ffffff;
+    font-size: 1.3rem;
+    font-weight: 700;
+    color: #fff;
+    letter-spacing: 0.01em;
 }
 
-/* 3. Buttons – consistent style */
+/* 3. App layout – sidebar + main */
+#appContainer {
+    display: flex;
+    flex-direction: column;
+    min-height: calc(100vh - 56px);
+}
+
+/* Sidebar becomes a top nav bar on mobile */
+.sidebar {
+    display: flex;
+    flex-direction: row;
+    background: #1e3a6e;
+    padding: 0.5rem 1rem;
+    gap: 0.5rem;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+}
+.sidebar::-webkit-scrollbar {
+    display: none;
+}
+
+.nav-btn {
+    background: transparent;
+    color: #93c5fd;
+    border: none;
+    border-radius: 6px;
+    padding: 0.5rem 1.1rem;
+    font-size: 0.95rem;
+    font-weight: 500;
+    cursor: pointer;
+    white-space: nowrap;
+    width: auto;
+    margin-bottom: 0;
+    transition: background 0.15s, color 0.15s;
+}
+.nav-btn.active {
+    background: #2563eb;
+    color: #fff;
+}
+.nav-btn:hover {
+    background: #2563eb;
+    color: #fff;
+    opacity: 1;
+}
+
+/* Main content area */
+#mainContent {
+    flex: 1;
+    padding: 1rem;
+    max-width: 800px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* 4. Buttons – global */
 button {
     border: none;
-    border-radius: 9px;
-    padding: 0.75rem 1.25rem;
-    font-size: 1rem;
+    border-radius: 8px;
+    padding: 0.65rem 1.2rem;
+    font-size: 0.95rem;
     cursor: pointer;
     color: #fff;
-    background-color: #3369cc;
-}
-button:hover {
-    opacity: 0.9;
-}
-button.primary {
     background-color: #2563eb;
+    font-weight: 500;
+    transition: opacity 0.15s;
+    width: auto;
+    margin-bottom: 0;
 }
-button.danger {
-    background-color: #ef4444;
-}
-button.neutral {
-    background-color: #6b7280;
-    color: #fff;
-}
+button:hover { opacity: 0.88; }
 
-#newMeasurementBtn{
-    margin: 20px 0 20px 0px;
-}
+button.primary { background-color: #2563eb; }
+button.danger  { background-color: #ef4444; }
+button.neutral { background-color: #6b7280; }
 
-.delete-measurement {
-    margin-top: 20px;
-    }
-
-/* Action Bar */
+/* 5. Action bar */
 .action-bar {
     display: flex;
-    justify-content: space-between;
-    align-items: center;
-    gap: 1rem;
-    margin-bottom: 1.5rem;
     flex-wrap: wrap;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 1.25rem;
 }
 
-@media (max-width: 657px) {
-    .action-bar{
-        flex-direction: column;
-        justify-content: center;
-    }
+#newMeasurementBtn {
+    flex-shrink: 0;
+    margin: 0;
+    width: auto;
 }
 
-/* Filter Tabs */
+/* 6. Filter tabs – scrollable on mobile */
 .filter-tabs {
     display: flex;
-    gap: 0.5rem;
+    gap: 0.4rem;
     background: #e5e7eb;
     padding: 0.25rem;
     border-radius: 10px;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    scrollbar-width: none;
+    flex: 1;
 }
+.filter-tabs::-webkit-scrollbar { display: none; }
+
 .filter-btn {
     background: transparent;
     color: #4b5563;
-    padding: 0.5rem 1rem;
-    border-radius: 8px;
-    font-size: 0.9rem;
+    padding: 0.45rem 0.9rem;
+    border-radius: 7px;
+    font-size: 0.88rem;
     border: none;
     cursor: pointer;
-    transition: all 0.2s;
+    white-space: nowrap;
+    flex-shrink: 0;
+    width: auto;
+    margin-bottom: 0;
+    transition: all 0.15s;
 }
 .filter-btn.active {
     background: #fff;
     color: #2563eb;
-    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    box-shadow: 0 1px 3px rgba(0,0,0,0.12);
     font-weight: 600;
 }
 
-/* Full‑width on mobile */
-@media (max-width: 600px) {
-    button {
-        width: 100%;
-        margin-bottom: 0.5rem;
-    }
-    #newMeasurementBtn {
-        width: 90%;
-        margin: 20px auto;
-    }
-    .delete-measurement {
-        width: 100%;
-        margin-bottom: 0;
-    }
-}
-
-/* 4. Modal – centered overlay */
-.modal {
-    display: none;
-    position: fixed;
-    inset: 0;
-    background-color: rgba(0,0,0,0.4);
-    align-items: center;
-    justify-content: center;
-    z-index: 100;
-}
-.modal.show {
+/* 7. Measurement cards */
+#measurementsContainer {
     display: flex;
-}
-.modal-content {
-    background-color: #fff;
-    border-radius: 8px;
-    padding: 1.5rem;
-    width: 90%;
-    max-width: 400px;
-    box-shadow: 0 2px 4px rgba(0,0,0,0.1);
-    position: relative;
-}
-.modal-content .close {
-    position: absolute;
-    top: 0.5rem;
-    right: 0.5rem;
-    font-size: 1.2rem;
-    cursor: pointer;
-    color: #666;
+    flex-direction: column;
+    gap: 0.75rem;
 }
 
-/* 5. Inputs – clean modern */
+.measurement-card {
+    background: #fff;
+    border-radius: 10px;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+    padding: 1rem;
+    width: 100%;
+    cursor: pointer;
+    transition: box-shadow 0.15s;
+}
+.measurement-card:hover {
+    box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+}
+.measurement-card strong {
+    font-size: 1.1rem;
+    display: block;
+    margin-bottom: 0.3rem;
+}
+.measurement-card a {
+    color: #2563eb;
+}
+
+.delete-measurement {
+    margin-top: 0.75rem;
+    width: 100%;
+    background-color: #ef4444;
+}
+
+/* 8. Details view – forms & tables */
+#measurementsContainer h3 {
+    font-size: 1.25rem;
+    margin-bottom: 0.5rem;
+}
+
+#measurementsContainer label {
+    display: block;
+    margin-top: 0.75rem;
+    font-weight: 500;
+    font-size: 0.95rem;
+}
+
 input[type="text"],
 input[type="tel"],
+input[type="number"],
 select {
     width: 100%;
-    padding: 0.5rem;
+    padding: 0.55rem 0.75rem;
     border: 1px solid #d1d5db;
-    border-radius: 4px;
-    font-size: 1rem;
-    box-sizing: border-box;
+    border-radius: 6px;
+    font-size: 0.95rem;
+    margin-top: 0.25rem;
+    background: #fff;
 }
-input:focus,
-select:focus {
+input:focus, select:focus {
     outline: 2px solid #2563eb;
     border-color: #2563eb;
 }
 
-/* Spacing between form fields */
-#modalForm label {
-    display: block;
-    margin-top: 0.75rem;
-    font-weight: 500;
-}
-
-/* 6. Measurement cards */
-.measurement-card {
-    background-color: #fff;
+#productForm {
+    background: #f9fafb;
     border-radius: 8px;
-    box-shadow: 0 1px 2px rgba(0,0,0,0.06);
-    padding: 1rem;
-    margin-bottom: 1rem;
-}
-.measurement-card strong {
-    font-size: 1.2rem;
-    display: block;
-    margin-bottom: 0.25rem;
+    padding: 0.9rem;
+    margin-top: 0.5rem;
 }
 
-/* 7. Product list – simple rows */
+#addProductBtn {
+    margin-top: 1rem;
+    width: 100%;
+}
+
+/* Products table – horizontal scroll on mobile */
+.table-wrapper {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+    margin-top: 0.75rem;
+    border-radius: 8px;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.07);
+}
+
 #productsTable {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 1rem;
+    min-width: 540px;
+    background: #fff;
 }
 #productsTable th,
 #productsTable td {
-    padding: 0.5rem;
+    padding: 0.55rem 0.75rem;
     text-align: left;
     border-bottom: 1px solid #e5e7eb;
+    font-size: 0.9rem;
+    white-space: nowrap;
 }
 #productsTable th {
-    background-color: #f9fafb;
+    background-color: #f3f4f6;
     font-weight: 600;
+    font-size: 0.85rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
 }
+
 .delete-product {
     background-color: #ef4444;
     color: #fff;
-    padding: 0.3rem 0.6rem;
-    font-size: 0.9rem;
-    border-radius: 4px;
+    padding: 0.3rem 0.65rem;
+    font-size: 0.85rem;
+    border-radius: 5px;
+    width: auto;
+    margin-bottom: 0;
 }
 
-/* 8. Totals section */
-#totalArea,
-#totalPrice {
-    font-weight: bold;
-    font-size: 1.1rem;
-}
-.totals-box {
-    background-color: #f3f4f6;
-    padding: 0.75rem;
-    border-radius: 6px;
+/* Totals box */
+.totals-box, div#measurementsContainer > div[style*="margin-top:10px"] {
+    background: #eff6ff;
+    border-radius: 8px;
+    padding: 0.75rem 1rem;
     margin-top: 1rem;
+    font-size: 0.95rem;
+    line-height: 1.8;
 }
 
-/* 9. Responsive tweaks */
-@media (max-width: 600px) {
-    header h1 {
-        font-size: 1.5rem;
+#totalArea, #totalPrice {
+    font-weight: 700;
+    color: #2563eb;
+    font-size: 1.05rem;
+}
+
+#backBtn {
+    margin-top: 1rem;
+    width: 100%;
+    background: #6b7280;
+}
+
+/* 9. Modal */
+.modal {
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0,0,0,0.45);
+    align-items: center;
+    justify-content: center;
+    z-index: 200;
+    padding: 1rem;
+}
+.modal.show { display: flex; }
+
+.modal-content {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.5rem;
+    width: 100%;
+    max-width: 420px;
+    box-shadow: 0 8px 24px rgba(0,0,0,0.15);
+    position: relative;
+}
+.modal-content .close {
+    position: absolute;
+    top: 0.75rem;
+    right: 1rem;
+    font-size: 1.4rem;
+    cursor: pointer;
+    color: #6b7280;
+    line-height: 1;
+}
+
+#modalForm label {
+    display: block;
+    margin-top: 0.9rem;
+    font-weight: 500;
+}
+#modalForm br { display: none; }
+
+#startBtn, #cancelBtn {
+    margin-top: 1rem;
+    width: 100%;
+}
+#cancelBtn {
+    background: #6b7280;
+    margin-top: 0.5rem;
+}
+
+/* 10. Dashboard */
+.dashboard {
+    background: #fff;
+    border-radius: 12px;
+    padding: 1.25rem;
+    box-shadow: 0 1px 4px rgba(0,0,0,0.08);
+}
+.dashboard h2 {
+    font-size: 1.3rem;
+    margin-bottom: 1rem;
+    color: #1e3a6e;
+}
+
+.time-filter {
+    margin-bottom: 1.25rem;
+}
+.time-filter label {
+    font-weight: 600;
+    font-size: 0.95rem;
+}
+
+.stats-section {
+    margin-top: 1.25rem;
+}
+.stats-section h3 {
+    font-size: 1rem;
+    font-weight: 700;
+    color: #374151;
+    margin-bottom: 0.6rem;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+.stats-section ul {
+    list-style: none;
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+.stats-section ul li {
+    background: #f3f4f6;
+    border-radius: 7px;
+    padding: 0.6rem 0.9rem;
+    font-size: 0.95rem;
+}
+
+/* Dashboard table */
+.stats-section table {
+    width: 100%;
+    border-collapse: collapse;
+    overflow-x: auto;
+    display: block;
+}
+.stats-section table th,
+.stats-section table td {
+    padding: 0.5rem 0.75rem;
+    text-align: left;
+    border-bottom: 1px solid #e5e7eb;
+    font-size: 0.9rem;
+    white-space: nowrap;
+}
+.stats-section table th {
+    background: #f3f4f6;
+    font-weight: 600;
+    font-size: 0.82rem;
+    text-transform: uppercase;
+    letter-spacing: 0.04em;
+}
+
+/* 11. Desktop — sidebar goes vertical */
+@media (min-width: 700px) {
+    #appContainer {
+        flex-direction: row;
+        align-items: flex-start;
+    }
+    .sidebar {
+        flex-direction: column;
+        width: 160px;
+        min-height: calc(100vh - 56px);
+        padding: 1rem 0.75rem;
+        gap: 0.4rem;
+        flex-shrink: 0;
+        overflow-x: visible;
+    }
+    .nav-btn {
+        width: 100%;
+        text-align: left;
+    }
+    #mainContent {
+        padding: 1.5rem;
+        margin: 0;
+    }
+    .action-bar {
+        flex-wrap: nowrap;
     }
     .measurement-card {
-        padding: 0.75rem;
+        max-width: 560px;
     }
-    .modal-content {
-        padding: 1rem;
-    }
-    main{
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-    }
-    #measurementsContainer{
-        width: 90%;
-        margin: auto;
+    .delete-measurement {
+        width: auto;
     }
 }

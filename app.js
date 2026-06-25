@@ -136,24 +136,27 @@ const showDetails = (id) => {
             <button type="button" id="addProductBtn" class="primary">Dodaj</button>
         </form>
         <h4>Proizvodi</h4>
-        <table id="productsTable" border="1" cellpadding="4" cellspacing="0">
-            <tr>
-                <th>Vrsta</th><th>Boja</th><th>Tip</th><th>Širina (cm)</th><th>Visina (cm)</th>
-                <th>Kvadratura (m²)</th><th>Napomena</th><th>Cijena (€)</th><th>Obriši</th>
-            </tr>
-            ${measurement.products.map(p => `
+        
+        <div class="table-wrapper">
+            <table id="productsTable" border="1" cellpadding="4" cellspacing="0">
                 <tr>
-                    <td>${p.type}</td>
-                    <td>${p.color || ''}</td>
-                    <td>${p.style || ''}</td>
-                    <td>${p.width}</td>
-                    <td>${p.height}</td>
-                <td>${p.area.toFixed(2)}</td>
-                <td>${p.note || ''}</td>
-                <td>${p.price.toFixed(2)}</td>
-                <td><button class="delete-product danger" data-id="${p.id}">Obriši</button></td>
-                </tr>`).join('')}
-        </table>
+                    <th>Vrsta</th><th>Boja</th><th>Tip</th><th>Širina (cm)</th><th>Visina (cm)</th>
+                    <th>Kvadratura (m²)</th><th>Napomena</th><th>Cijena (€)</th><th>Obriši</th>
+                </tr>
+                ${measurement.products.map(p => `
+                    <tr>
+                        <td>${p.type}</td>
+                        <td>${p.color || ''}</td>
+                        <td>${p.style || ''}</td>
+                        <td>${p.width}</td>
+                        <td>${p.height}</td>
+                    <td>${p.area.toFixed(2)}</td>
+                    <td>${p.note || ''}</td>
+                    <td>${p.price.toFixed(2)}</td>
+                    <td><button class="delete-product danger" data-id="${p.id}">Obriši</button></td>
+                    </tr>`).join('')}
+            </table>
+        </div>
         <div style="margin-top:10px;">
             <strong>Ukupna Kvadratura (m²): </strong><span id="totalArea">0</span><br>
             <strong>Ukupna Cijena (€): </strong><span id="totalPrice">0</span>
@@ -252,24 +255,36 @@ const showDetails = (id) => {
     });
 };
 
-/* 1. Existing filter handling */
+/* 1. Filter tab handling */
 document.querySelectorAll('.filter-btn').forEach(btn => {
     btn.addEventListener('click', () => {
         document.querySelector('.filter-btn.active').classList.remove('active');
         btn.classList.add('active');
-        const filter = btn.dataset.filter;
-        if (filter === 'Dashboard') {
-            renderDashboard();
-        } else {
-            currentFilter = filter;
-            renderMeasurements();
-        }
+        currentFilter = btn.dataset.filter;
+        renderMeasurements();
     });
 });
 
-/* 2. Dashboard rendering */
+/* 2. Sidebar navigation */
+document.getElementById('navMeasurements').addEventListener('click', () => {
+    document.querySelector('.nav-btn.active').classList.remove('active');
+    document.getElementById('navMeasurements').classList.add('active');
+    document.getElementById('measurementsView').style.display = 'block';
+    document.getElementById('dashboardView').style.display = 'none';
+    renderMeasurements();
+});
+
+document.getElementById('navDashboard').addEventListener('click', () => {
+    document.querySelector('.nav-btn.active').classList.remove('active');
+    document.getElementById('navDashboard').classList.add('active');
+    document.getElementById('measurementsView').style.display = 'none';
+    document.getElementById('dashboardView').style.display = 'block';
+    updateDashboard();
+});
+
+/* 2. Dashboard rendering (called when Dashboard tab is clicked) */
 function renderDashboard() {
-    const container = document.getElementById('measurementsContainer');
+    const container = document.getElementById('dashboardView');
     container.innerHTML = `
         <div class="dashboard">
             <h2>Dashboard</h2>
