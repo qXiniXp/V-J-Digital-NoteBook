@@ -111,7 +111,8 @@ button.neutral { background-color: #6b7280; }
 /* 5. Action bar */
 .action-bar {
     display: flex;
-    flex-wrap: wrap;
+    flex-direction: row;
+    flex-wrap: nowrap;
     align-items: center;
     gap: 0.75rem;
     margin-bottom: 1.25rem;
@@ -121,9 +122,9 @@ button.neutral { background-color: #6b7280; }
     flex-shrink: 0;
     margin: 0;
     width: auto;
+    white-space: nowrap;
 }
 
-/* 6. Filter tabs – scrollable on mobile */
 .filter-tabs {
     display: flex;
     gap: 0.4rem;
@@ -133,8 +134,10 @@ button.neutral { background-color: #6b7280; }
     overflow-x: auto;
     -webkit-overflow-scrolling: touch;
     scrollbar-width: none;
-    flex: 1;
+    min-width: 0;
+    max-width: 100%;
 }
+
 .filter-tabs::-webkit-scrollbar { display: none; }
 
 .filter-btn {
@@ -414,7 +417,7 @@ input:focus, select:focus {
 }
 
 /* 11. Desktop — sidebar goes vertical */
-@media (min-width: 700px) {
+@media (min-width: 800px) {
     #appContainer {
         flex-direction: row;
         align-items: flex-start;
@@ -428,6 +431,14 @@ input:focus, select:focus {
         flex-shrink: 0;
         overflow-x: visible;
     }
+
+    .sidebar {
+    position: sticky;
+    top: 56px; /* visina headera */
+    height: calc(100vh - 56px);
+    overflow-y: auto;
+    }
+
     .nav-btn {
         width: 100%;
         text-align: left;
@@ -436,13 +447,15 @@ input:focus, select:focus {
         padding: 1.5rem;
         margin: 0;
     }
-    .action-bar {
-        flex-wrap: nowrap;
-    }
+
     .measurement-card {
         max-width: 560px;
     }
     .delete-measurement {
         width: auto;
+    }
+
+    .filter-tabs{
+        max-width: fit-content;
     }
 }
