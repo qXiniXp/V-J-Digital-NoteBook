@@ -81,26 +81,26 @@ document.addEventListener('DOMContentLoaded', () => {
             <p><strong>Broj Telefona:</strong> <a href="tel:${measurement.phone}">${measurement.phone}</a></p>
             <p><strong>Datum:</strong> ${new Date(measurement.createdAt).toLocaleString()}</p>
             <label>Status:
-                    <select id="statusSelect">
-                        <option value="Mjereno">Mjereno</option>
-                        <option value="Napravljeno">Napravljeno</option>
-                        <option value="Montirano">Montirano</option>
-                        <option value="Placeno">Placeno</option>
-                    </select>
+                <select id="statusSelect">
+                    <option value="Mjereno">Mjereno</option>
+                    <option value="Napravljeno">Napravljeno</option>
+                    <option value="Montirano">Montirano</option>
+                    <option value="Placeno">Placeno</option>
+                </select>
             </label>
             <hr>
             <h4>Dodaj Proizvod</h4>
             <form id="productForm">
-                <label>Vrsta Proizvoda:
-                    <select id="productType">
-                        <option value="Komarnik">Komarnik</option>
-                        <option value="Skrin zavjesa">Skrin zavjesa</option>
-                        <option value="Venecijaner">Venecijaner</option>
-                        <option value="Zebra zavjesa">Zebra zavjesa</option>
-                    </select>
-                </label>
-                <div id="extraKomarnikOptions" style="display:none; margin-top:0.5rem;">
-                    <label>Boja:
+                <div style="display:flex; gap:0.75rem;">
+                    <label style="flex:1;">Vrsta Proizvoda:
+                        <select id="productType">
+                            <option value="Komarnik">Komarnik</option>
+                            <option value="Skrin zavjesa">Skrin zavjesa</option>
+                            <option value="Venecijaner">Venecijaner</option>
+                            <option value="Zebra zavjesa">Zebra zavjesa</option>
+                        </select>
+                    </label>
+                    <label id="komarnikColorLabel" style="flex:1; display:none;">Boja:
                         <select id="komarnikColor">
                             <option value="Bijeli">Bijeli</option>
                             <option value="Antracit">Antracit</option>
@@ -112,24 +112,26 @@ document.addEventListener('DOMContentLoaded', () => {
                             <option value="Bež">Bež</option>
                         </select>
                     </label>
-                    <label>Tip:
-                        <select id="komarnikStyle">
-                            <option value="Normalni">Normalni</option>
-                            <option value="Prag Lajsna">Prag Lajsna</option>
-                        </select>
-                    </label>
                 </div>
+                <label id="komarnikStyleLabel" style="display:none;">Tip:
+                    <select id="komarnikStyle">
+                        <option value="Normalni">Normalni</option>
+                        <option value="Prag Lajsna">Prag Lajsna</option>
+                    </select>
+                </label>
                 <div style="margin-top: 0.5rem;">
                     <label>Cijena po m² (€):
                         <input type="number" id="productPricePerM2" step="0.01" min="0">
                     </label>
                 </div>
-                <label>Širina (cm):
-                    <input type="number" id="productWidth" min="0" step="0.01" required>
-                </label>
-                <label>Visina (cm):
-                    <input type="number" id="productHeight" min="0" step="0.01" required>
-                </label>
+                <div style="display:flex; gap:0.75rem;">
+                    <label style="flex:1;">Širina (cm):
+                        <input type="number" id="productWidth" min="0" step="0.01" required>
+                    </label>
+                    <label style="flex:1;">Visina (cm):
+                        <input type="number" id="productHeight" min="0" step="0.01" required>
+                    </label>
+                </div>
                 <label>Napomena:
                     <input type="text" id="productNote" placeholder="Opcionalna napomena">
                 </label>
@@ -210,14 +212,13 @@ document.addEventListener('DOMContentLoaded', () => {
         };
 
         const productTypeSelect = document.getElementById('productType');
-        const extraOptionsDiv = document.getElementById('extraKomarnikOptions');
+
         const toggleKomarnikOptions = () => {
-            if (productTypeSelect.value === 'Komarnik') {
-                extraOptionsDiv.style.display = 'block';
-            } else {
-                extraOptionsDiv.style.display = 'none';
-            }
+            const isKomarnik = productTypeSelect.value === 'Komarnik';
+            document.getElementById('komarnikColorLabel').style.display = isKomarnik ? 'block' : 'none';
+            document.getElementById('komarnikStyleLabel').style.display = isKomarnik ? 'block' : 'none';
         };
+
         productTypeSelect.addEventListener('change', toggleKomarnikOptions);
         toggleKomarnikOptions();
 
