@@ -1,7 +1,6 @@
-// app.js – status change and filter implementation
 const STORAGE_KEY = "measurements";
 let currentMeasurementId = null;
-let currentFilter = "Sve"; // default filter
+let currentFilter = "Sve";
 
 document.addEventListener('DOMContentLoaded', () => {
     const newMeasurementBtn = document.getElementById('newMeasurementBtn');
@@ -171,7 +170,6 @@ document.addEventListener('DOMContentLoaded', () => {
 
         document.getElementById('backBtn').onclick = renderMeasurements;
 
-        // Status change handler
         document.getElementById('statusSelect').onchange = () => {
             const newStatus = document.getElementById('statusSelect').value;
             const measurements = loadMeasurements();
@@ -182,15 +180,22 @@ document.addEventListener('DOMContentLoaded', () => {
             }
         };
 
-        // Export to CSV handler
         document.getElementById('exportBtn').onclick = () => {
             const measurement = loadMeasurements().find(m => m.id === currentMeasurementId);
             if (!measurement) return;
 
+            const { totalArea, totalPrice } = calculateTotals(measurement);
+
             const rows = [
+                [`${measurement.projectName}`],
+                [`${measurement.customerName}`],
+                [`="${measurement.phone}"`],
+                [`${new Date(measurement.createdAt).toLocaleDateString()}`],
+                [`${measurement.status || 'Mjereno'}`],
+                [],
                 ['Vrsta', 'Boja', 'Tip', 'Širina (cm)', 'Visina (cm)', 'Kvadratura (m²)', 'Napomena', 'Cijena (€)'],
                 ...measurement.products.map(p => [
-                    p.type,
+                    p.type, 
                     p.color || '',
                     p.style || '',
                     p.width,
@@ -198,11 +203,14 @@ document.addEventListener('DOMContentLoaded', () => {
                     p.area.toFixed(2),
                     p.note || '',
                     p.price.toFixed(2)
-                ])
+                ]),
+                [],
+                ['Ukupna Kvadratura (m²):', totalArea.toFixed(2)],
+                ['Ukupna Cijena (€):', totalPrice.toFixed(2)]
             ];
 
             const csv = rows.map(r => r.join(',')).join('\n');
-            const blob = new Blob([csv], { type: 'text/csv;charset=utf-8;' });
+            const blob = new Blob(['\ufeff' + csv], { type: 'text/csv;charset=utf-8;' });
             const url = URL.createObjectURL(blob);
             const a = document.createElement('a');
             a.href = url;
@@ -285,7 +293,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     };
 
-    /* 1. Filter tab handling */
     document.querySelectorAll('.filter-btn').forEach(btn => {
         btn.addEventListener('click', () => {
             document.querySelector('.filter-btn.active').classList.remove('active');
@@ -295,7 +302,6 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 
-    /* 2. Sidebar navigation */
     document.getElementById('navMeasurements').addEventListener('click', () => {
         document.querySelector('.nav-btn.active').classList.remove('active');
         document.getElementById('navMeasurements').classList.add('active');
@@ -312,7 +318,6 @@ document.addEventListener('DOMContentLoaded', () => {
         updateDashboard();
     });
 
-    /* 3. Dashboard update logic */
     function updateDashboard() {
         const filter = document.getElementById('timeFilter').value;
         const now = new Date();
