@@ -322,20 +322,31 @@ document.addEventListener('DOMContentLoaded', () => {
         const filter = document.getElementById('timeFilter').value;
         const now = new Date();
         const measurements = loadMeasurements().filter(m => {
-            const d = new Date(m.createdAt);
-            if (filter === 'Month') {
-                return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
-            } else if (filter === 'Year') {
-                return d.getFullYear() === now.getFullYear();
-            }
-            return true;
-        });
+        const d = new Date(m.createdAt);
+        if (filter === 'Today') {
+            return d.toDateString() === now.toDateString();
+        } else if (filter === 'Week') {
+            const startOfWeek = new Date(now);
+            const day = now.getDay();
+            const diff = day === 0 ? 6 : day - 1; // ponedjeljak je prvi dan
+            startOfWeek.setDate(now.getDate() - diff);
+            startOfWeek.setHours(0, 0, 0, 0);
+            return d >= startOfWeek;
+        } else if (filter === 'Month') {
+            return d.getFullYear() === now.getFullYear() && d.getMonth() === now.getMonth();
+        } else if (filter === 'Year') {
+            return d.getFullYear() === now.getFullYear();
+        }
+        return true;
+});
 
         const totalMeasurements = measurements.length;
         const paidMeasurementsList = measurements.filter(m => m.status === 'Placeno');
         const paidCount = paidMeasurementsList.length;
+        const madeMeasurementsList = measurements.filter(m => 
+            m.status === 'Napravljeno' || m.status === 'Montirano' || m.status === 'Placeno');
         const totalRevenue = paidMeasurementsList.reduce((sum, m) => sum + m.products.reduce((s, p) => s + p.price, 0), 0);
-        const totalCost = paidMeasurementsList.reduce((sum, m) => sum + m.products.reduce((s, p) => s + p.area * 25, 0), 0);
+        const totalCost = madeMeasurementsList.reduce((sum, m) => sum + m.products.reduce((s, p) => s + p.area * 25, 0), 0);
         const profit = totalRevenue - totalCost;
         const profitPct = totalRevenue ? ((profit / totalRevenue) * 100).toFixed(2) : 0;
 
