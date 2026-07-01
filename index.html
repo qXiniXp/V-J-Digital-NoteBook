@@ -13,8 +13,9 @@
 
     <div id="appContainer">
         <aside class="sidebar">
-            <button id="navMeasurements" class="nav-btn active">Mjerenja</button>
             <button id="navDashboard" class="nav-btn">Dashboard</button>
+            <button id="navMeasurements" class="nav-btn active">Mjerenja</button>
+            <button id="navRepairs" class="nav-btn">Popravke</button>
         </aside>
 
         <main id="mainContent">
@@ -52,13 +53,19 @@
                     <div id="productBreakdown" class="stats-section"></div>
                 </div>
             </section>
+
+            <section id="repairsView" style="display: none;">
+                <div class="repairsAction-bar">
+                    <h2>Popravke</h2>
+                    <button id="newRepairBtn" class="primary">Nova Popravka</button>
+                </div>
+            </section>
         </main>
     </div>
 
     <!-- Modal (hidden by default) -->
     <div id="modal" class="modal">
         <div class="modal-content">
-            <span class="close">&times;</span>
             <form id="modalForm">
                 <label for="customerName">Ime Klijenta:</label>
                 <input type="text" id="customerName" name="customerName" required><br><br>
@@ -75,6 +82,25 @@
         </div>
     </div>
 
+    <div id="repairsModal" class="repairsModal">
+        <div class="repairsModal-content">
+            <form id="repairsModalForm">
+                <label for="repairsCustomerName">Ime Klijenta:</label>
+                <input type="text" id="repairsCustomerName" name="repairsCustomerName" required><br><br>
+
+                <label for="repairsPhoneNumber">Broj Telefona:</label>
+                <input type="tel" id="repairsPhoneNumber" name="repairsPhoneNumber"><br><br>
+
+                <label for="repairsProjectName">Ime Mjerenja:</label>
+                <input type="text" id="repairsProjectName" name="repairsProjectName" required><br><br>
+
+                <button type="button" id="repairsStartBtn">Počni</button>
+                <button type="button" id="repairsCancelBtn">Poništi</button>
+            </form>
+        </div>
+    </div>
+
     <script src="app.js"></script>
+    <script src="./repairs.js"></script>
 </body>
 </html>

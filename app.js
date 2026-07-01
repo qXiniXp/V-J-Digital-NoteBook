@@ -305,8 +305,9 @@ document.addEventListener('DOMContentLoaded', () => {
     document.getElementById('navMeasurements').addEventListener('click', () => {
         document.querySelector('.nav-btn.active').classList.remove('active');
         document.getElementById('navMeasurements').classList.add('active');
-        document.getElementById('measurementsView').style.display = 'block';
         document.getElementById('dashboardView').style.display = 'none';
+        document.getElementById('repairsView').style.display = 'none';
+        document.getElementById('measurementsView').style.display = 'block';
         renderMeasurements();
     });
 
@@ -314,9 +315,18 @@ document.addEventListener('DOMContentLoaded', () => {
         document.querySelector('.nav-btn.active').classList.remove('active');
         document.getElementById('navDashboard').classList.add('active');
         document.getElementById('measurementsView').style.display = 'none';
+        document.getElementById('repairsView').style.display = 'none';
         document.getElementById('dashboardView').style.display = 'block';
         updateDashboard();
     });
+
+    document.getElementById('navRepairs').addEventListener('click', () => {
+        document.querySelector('.nav-btn.active').classList.remove('active');
+        document.getElementById('navRepairs').classList.add('active');
+        document.getElementById('measurementsView').style.display = 'none';
+        document.getElementById('dashboardView').style.display = 'none';
+        document.getElementById('repairsView').style.display = 'block';
+    })
 
     function updateDashboard() {
         const filter = document.getElementById('timeFilter').value;
